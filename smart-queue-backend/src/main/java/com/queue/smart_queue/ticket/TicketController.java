@@ -20,7 +20,7 @@ public class TicketController {
 
     @GetMapping("/ticket")
     public List<TicketResponse> getOpenTickets(){
-        return ticketService.getTickets();
+        return ticketService.getOpenTickets();
     }
 
 }
