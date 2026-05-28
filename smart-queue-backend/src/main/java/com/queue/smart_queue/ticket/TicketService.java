@@ -1,6 +1,8 @@
 package com.queue.smart_queue.ticket;
 
 import com.queue.smart_queue.counter.Counter;
+import com.queue.smart_queue.exception.CounterInServiceException;
+import com.queue.smart_queue.exception.TicketNotCalledException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +32,10 @@ public class TicketService {
 
     public void updateStatus(String number, TicketStatus status, Counter counter){
         Long id = Long.valueOf(number.substring(2));
-        System.out.println("=============== Updating ticket status for id: " + id);
         if(ticketRepository.findById(id).isEmpty()) throw new RuntimeException("Ticket not found");
 
         Ticket ticket = ticketRepository.findById(id).get();
+        if(ticket.getCounter() == null) throw new TicketNotCalledException("Ticket has not been called yet!");
         if (!ticket.getCounter().equals(counter)) throw new RuntimeException("You can't finish another counter's ticket!");
         ticket.setStatus(status);
         ticketRepository.save(ticket);
@@ -43,7 +45,7 @@ public class TicketService {
         Ticket nextTicket = ticketRepository.findAllWaitingOrdered(LocalDateTime.now().minusMinutes(30)).getFirst();
 
         if(ticketRepository.existsByCounterAndStatus(counter, TicketStatus.IN_SERVICE)){
-            throw new RuntimeException("You must finish your current ticket first!");
+            throw new CounterInServiceException("You must finish your current ticket first!");
         }
 
         nextTicket.setStatus(TicketStatus.IN_SERVICE);
