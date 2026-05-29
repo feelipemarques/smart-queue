@@ -5,6 +5,7 @@ import com.queue.smart_queue.ticket.TicketResponse;
 import com.queue.smart_queue.ticket.TicketService;
 import com.queue.smart_queue.ticket.TicketStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,10 +15,10 @@ public class CounterService {
     private final CounterRepository counterRepository;
     private final TicketService ticketService;
 
-    public Long createCounter(){
+    public CounterResponse createCounter(){
         Counter counter = new Counter();
         counterRepository.save(counter);
-        return counter.getId();
+        return new CounterResponse(counter.getId());
     }
 
     public void changeCounterStatus(Long counterId, Boolean status){

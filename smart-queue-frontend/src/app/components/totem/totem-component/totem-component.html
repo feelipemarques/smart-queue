@@ -1,0 +1,8 @@
+@if(!hasTicket){
+    <button (click)="issueTicket('AN')">Service</button>
+    <button (click)="issueTicket('AP')">Priority Service</button>
+    <button (click)="issueTicket('AE')">Special Service (+80)</button>
+}@else {
+    <p>{{ticketNumber}}</p>
+    <p>{{issuedAt}}</p>
+}

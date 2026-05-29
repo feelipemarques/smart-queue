@@ -14,12 +14,12 @@ public class TicketController {
 
     private final TicketService ticketService;
 
-    @PostMapping("/tickets/new")
+    @PostMapping("/tickets")
     public TicketResponse getTicket(@RequestParam("prefix") TicketPrefix prefix) {
         return ticketService.issueTicket(prefix);
     }
 
-    @GetMapping("/tickets/queue")
+    @GetMapping("/tickets")
     public List<TicketResponse> getOpenTickets(){
         return ticketService.getOpenTickets();
     }

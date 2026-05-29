@@ -3,6 +3,8 @@ package com.queue.smart_queue.counter;
 import com.queue.smart_queue.ticket.TicketCalledResponse;
 import com.queue.smart_queue.ticket.TicketResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,8 +14,8 @@ public class CounterController {
     private final CounterService counterService;
 
     @PostMapping("/counter/new")
-    public String newCounter(){
-        return counterService.createCounter().toString();
+    public ResponseEntity<CounterResponse> newCounter(){
+        return ResponseEntity.status(HttpStatus.CREATED).body(counterService.createCounter());
     }
 
     @PutMapping("/counter/{counterId}/status")
