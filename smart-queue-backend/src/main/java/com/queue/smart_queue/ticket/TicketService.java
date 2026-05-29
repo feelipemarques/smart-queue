@@ -23,6 +23,13 @@ public class TicketService {
         return new TicketResponse(formatTicket(prefix, ticket.getId()),ticket.getIssuedAt());
     }
 
+    public TicketStatus getStatusByTicket(String ticket){
+        return ticketRepository
+                .findById(Long.valueOf(ticket.substring(2)))
+                .map(Ticket::getStatus)
+                .orElseThrow(() -> new RuntimeException(ticket));
+    }
+
     public List<TicketResponse> getOpenTickets(){
         return ticketRepository.findByStatus(TicketStatus.WAITING).stream()
                 .map(ticket -> new TicketResponse(

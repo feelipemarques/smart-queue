@@ -1,10 +1,7 @@
 package com.queue.smart_queue.ticket;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +19,11 @@ public class TicketController {
     @GetMapping("/tickets")
     public List<TicketResponse> getOpenTickets(){
         return ticketService.getOpenTickets();
+    }
+
+    @GetMapping("/tickets/{ticket}")
+    public TicketStatus getTicket(@PathVariable("ticket") String ticket){
+        return ticketService.getStatusByTicket(ticket);
     }
 
 }

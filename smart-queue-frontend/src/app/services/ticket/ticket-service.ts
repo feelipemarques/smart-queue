@@ -22,4 +22,9 @@ export class TicketService {
   getAllTickets(): Observable<TicketResponse[]>{
     return this.httpClient.get<TicketResponse[]>(`${this.apiUrl}/tickets`);
   }
+
+  getStatusByTicket(ticket: string): Observable<string>{
+    return this.httpClient.get<string>(`${this.apiUrl}/tickets/${ticket}`);
+  }
+
 }
