@@ -1,14 +1,99 @@
-@if(counterId == ''){
-    <button (click)="openCounter()">Open Counter</button>
-    <p>You're not assigned to a counter. Please create one!</p>
-}@else {
-    <p>Your counter: {{counterId}}</p>
-    <p>You're {{counterStatus ? 'online' : 'offline'}}</p>
-    <button (click)="changeCounterStatus()">Change Status</button>
-}
+<div class="attendant-container">
 
-@for (ticket of tickets; track $index) {
-    <p>{{ticket.number}} - {{ticket.issuedAt}}</p>
-}
+  @if (counterId === '') {
+    <div class="setup-screen">
+      <div class="setup-card">
+        <div class="logo">
+          <span class="logo-smart">Smart</span><span class="logo-queue">Queue</span>
+        </div>
+        <h1 class="setup-title">Attendant Panel</h1>
+        <p class="setup-subtitle">There's no active Counter. Please open one!</p>
+        <button class="btn btn--primary" (click)="openCounter()">
+          Open Counter
+        </button>
+      </div>
+    </div>
 
+  } @else {
+    <div class="dashboard">
 
+      <header class="topbar">
+        <div class="logo">
+          <span class="logo-smart">Smart</span><span class="logo-queue">Queue</span>
+        </div>
+        <div class="counter-info">
+          <span class="counter-label">Counter</span>
+          <span class="counter-id">{{ counterId }}</span>
+        </div>
+        <div class="status-toggle" (click)="changeCounterStatus()">
+          <span class="status-dot" [class.status-dot--online]="counterStatus"></span>
+          <span class="status-label">{{ counterStatus ? 'Online' : 'Offline' }}</span>
+        </div>
+      </header>
+
+      <div class="dashboard-content">
+
+        <section class="queue-section">
+          <div class="section-header">
+            <h2 class="section-title">Tickets</h2>
+            <span class="queue-count">{{ tickets.length }} ticket(s)</span>
+            <button class="btn-refresh" (click)="refreshTickets()" title="Atualizar fila">
+              ↻ Refresh
+            </button>
+          </div>
+
+          <div class="queue-list">
+            @if (tickets.length === 0) {
+              <div class="queue-empty">
+                <p>No tickets waiting</p>
+              </div>
+            }
+            @for (ticket of tickets; track $index) {
+              <div class="queue-item"
+                [class.queue-item--special]="ticket.number.startsWith('AE')"
+                [class.queue-item--priority]="ticket.number.startsWith('AP')">
+                <span class="queue-number">{{ ticket.number }}</span>
+                <span class="queue-time">{{ ticket.issuedAt }}</span>
+                <span class="queue-badge"
+                  [class.badge--special]="ticket.number.startsWith('AE')"
+                  [class.badge--priority]="ticket.number.startsWith('AP')"
+                  [class.badge--normal]="ticket.number.startsWith('AN')">
+                  {{ ticket.number.startsWith('AE') ? 'Special' : ticket.number.startsWith('AP') ? 'Priority' : 'Regular' }}
+                </span>
+              </div>
+            }
+          </div>
+        </section>
+
+        <section class="action-section">
+
+          <div class="current-ticket">
+            @if (isInService) {
+              <p class="current-ticket__label">In Service</p>
+              <p class="current-ticket__number">{{ currentTicket }}</p>
+            } @else {
+              <p class="current-ticket__empty">No ticket<br>in service</p>
+            }
+          </div>
+
+          @if (errorMessage) {
+            <div class="toast" [class.toast--success]="errorMessage === 'Success!'">
+              {{ errorMessage }}
+            </div>
+          }
+
+          <div class="action-buttons">
+            <button class="btn btn--primary" (click)="callNextTicket()" [disabled]="!counterStatus">
+              Call Next
+            </button>
+            <button class="btn btn--danger" (click)="finishCurrentTicket()" [disabled]="!isInService">
+              Finish Service
+            </button>
+          </div>
+
+        </section>
+      </div>
+    </div>
+  }
+
+</div>

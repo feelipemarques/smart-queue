@@ -1,8 +1,52 @@
-@if(!hasTicket){
-    <button (click)="issueTicket('AN')">Service</button>
-    <button (click)="issueTicket('AP')">Priority Service</button>
-    <button (click)="issueTicket('AE')">Special Service (+80)</button>
-}@else {
-    <p>{{ticketNumber}}</p>
-    <p>{{issuedAt}}</p>
-}
+<div class="totem-container">
+  <header class="totem-header">
+    <div class="logo">
+      <span class="logo-smart">Smart</span><span class="logo-queue">Queue</span>
+    </div>
+  </header>
+
+  @if (!hasTicket) {
+    <main class="totem-main">
+      <h1 class="totem-title">Welcome!</h1>
+      <p class="totem-subtitle">Select your service priority</p>
+
+      <div class="ticket-buttons">
+        <button class="ticket-btn ticket-btn--normal" (click)="issueTicket('AN')">
+          <span class="ticket-btn__badge">AN</span>
+          <span class="ticket-btn__content">
+            <span class="ticket-btn__label">Regular Service</span>
+            <span class="ticket-btn__desc">Any kind of priority</span>
+          </span>
+          <span class="ticket-btn__arrow">›</span>
+        </button>
+
+        <button class="ticket-btn ticket-btn--priority" (click)="issueTicket('AP')">
+          <span class="ticket-btn__badge">AP</span>
+          <span class="ticket-btn__content">
+            <span class="ticket-btn__label">Priority Service</span>
+            <span class="ticket-btn__desc">60 to 79 Y.O</span>
+          </span>
+          <span class="ticket-btn__arrow">›</span>
+        </button>
+
+        <button class="ticket-btn ticket-btn--special" (click)="issueTicket('AE')">
+          <span class="ticket-btn__badge">AE</span>
+          <span class="ticket-btn__content">
+            <span class="ticket-btn__label">Special Service</span>
+            <span class="ticket-btn__desc">80+ years or special needs</span>
+          </span>
+          <span class="ticket-btn__arrow">›</span>
+        </button>
+      </div>
+    </main>
+  } @else {
+    <main class="totem-main ticket-issued">
+      <div class="ticket-card">
+        <p class="ticket-card__label">Your ticket</p>
+        <p class="ticket-card__number">{{ ticketNumber }}</p>
+        <p class="ticket-card__time">Issued at {{ issuedAt }}</p>
+        <p class="ticket-card__hint">Please wait to be called on the panel.</p>
+      </div>
+    </main>
+  }
+</div>

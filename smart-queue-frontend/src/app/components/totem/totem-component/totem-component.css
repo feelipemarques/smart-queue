@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Outfit:wght@300;400;500;600&display=swap');
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #0A0F1E;
+  font-family: 'Outfit', sans-serif;
+  color: #F9FAFB;
+}
+
+.totem-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.totem-header {
+  width: 100%;
+  max-width: 600px;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 3rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.logo-smart { color: #F9FAFB; }
+.logo-queue { color: #14B8A6; }
+
+.totem-main {
+  width: 100%;
+  max-width: 600px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.totem-title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.03em;
+  color: #F9FAFB;
+}
+
+.totem-subtitle {
+  font-size: 1rem;
+  color: #6B7280;
+  margin: 0 0 2.5rem;
+}
+
+.ticket-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ticket-btn {
+  width: 100%;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #111827;
+  color: #F9FAFB;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: left;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ticket-btn::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.ticket-btn--normal::before  { background: #3B82F6; }
+.ticket-btn--priority::before { background: #F59E0B; }
+.ticket-btn--special::before  { background: #8B5CF6; }
+
+.ticket-btn:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateX(4px);
+  background: #1A2235;
+}
+
+.ticket-btn__badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.ticket-btn--normal   .ticket-btn__badge { background: rgba(59,  130, 246, 0.12); color: #60A5FA; }
+.ticket-btn--priority .ticket-btn__badge { background: rgba(245, 158, 11,  0.12); color: #FCD34D; }
+.ticket-btn--special  .ticket-btn__badge { background: rgba(139, 92,  246, 0.12); color: #A78BFA; }
+
+.ticket-btn__content {
+  flex: 1;
+}
+
+.ticket-btn__label {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.ticket-btn__desc {
+  display: block;
+  font-size: 0.85rem;
+  color: #6B7280;
+}
+
+.ticket-btn__arrow {
+  color: #374151;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* Ticket issued state */
+.ticket-issued {
+  justify-content: center;
+}
+
+.ticket-card {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 3.5rem 3rem;
+  text-align: center;
+  width: 100%;
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ticket-card__label {
+  font-size: 0.8rem;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 1rem;
+}
+
+.ticket-card__number {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 5rem;
+  font-weight: 700;
+  color: #14B8A6;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.ticket-card__time {
+  font-size: 0.9rem;
+  color: #4B5563;
+  font-family: 'IBM Plex Mono', monospace;
+  margin: 0 0 2rem;
+}
+
+.ticket-card__hint {
+  font-size: 0.875rem;
+  color: #374151;
+  margin: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
