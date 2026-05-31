@@ -23,6 +23,11 @@ public class CounterController {
         counterService.changeCounterStatus(counterId, status);
     }
 
+    @GetMapping("/counter/{counterId}/status")
+    public Boolean getCounterStatus(@PathVariable("counterId") Long counterId){
+       return counterService.getCounterStatus(counterId);
+    }
+
     @PostMapping("/counter/{counterId}/call")
     public TicketCalledResponse callNextTicket(@PathVariable Long counterId){
         return counterService.callNext(counterId);

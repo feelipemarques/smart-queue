@@ -15,12 +15,16 @@ export class CounterService {
     this.httpClient = httpClient;
   }
 
-  createNewCounter(): Observable<number>{
-    return this.httpClient.post<number>(`${this.apiUrl}/counter/new`, null);
+  createNewCounter(): Observable<any>{
+    return this.httpClient.post(`${this.apiUrl}/counter/new`, null);
   }
 
-  changeCounterStatus(counter: string, status: string): Observable<void>{
-    return this.httpClient.put<void>(`${this.apiUrl}/${counter}/status`, null, {params: {status}});
+  changeCounterStatus(counter: string, on: boolean): Observable<void>{
+    return this.httpClient.put<void>(`${this.apiUrl}/counter/${counter}/status`, null, {params: {on}});
+  }
+
+  getCurrentStatus(counter: string): Observable<boolean>{
+    return this.httpClient.get<boolean>(`${this.apiUrl}/counter/${counter}/status`);
   }
 
   callNextTicket(counter: string): Observable<TicketCalledResponse>{

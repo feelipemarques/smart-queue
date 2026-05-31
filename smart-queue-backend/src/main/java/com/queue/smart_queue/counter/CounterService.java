@@ -28,6 +28,11 @@ public class CounterService {
         });
     }
 
+    public Boolean getCounterStatus(Long counterId){
+        Counter counter = counterRepository.findById(counterId).orElseThrow(() -> new RuntimeException("Counter not found"));
+        return counter.getOnline();
+    }
+
     public TicketCalledResponse callNext(Long counterId){
         return ticketService.callNext(counterRepository
                 .findByIdAndOnline(counterId, Boolean.TRUE)

@@ -22,7 +22,7 @@ public class TicketController {
     }
 
     @GetMapping("/tickets/{ticket}")
-    public TicketStatus getTicket(@PathVariable("ticket") String ticket){
+    public TicketStatus getTicketStatus(@PathVariable("ticket") String ticket){
         return ticketService.getStatusByTicket(ticket);
     }
 
