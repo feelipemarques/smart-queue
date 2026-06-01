@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { CounterService } from '../../../services/counter/counter-service';
 import { TicketService } from '../../../services/ticket/ticket-service';
 import { TicketResponse } from '../../../services/ticket/ticket-response';
+import { WaitTimePipe } from '../../../pipes/wait-time-pipe';
 
 @Component({
   selector: 'app-attendant-component',
-  imports: [],
+  imports: [WaitTimePipe],
   templateUrl: './attendant-component.html',
   styleUrl: './attendant-component.css',
 })

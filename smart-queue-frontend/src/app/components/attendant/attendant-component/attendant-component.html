@@ -56,7 +56,7 @@
                 [class.queue-item--special]="ticket.number.startsWith('AE')"
                 [class.queue-item--priority]="ticket.number.startsWith('AP')">
                 <span class="queue-number">{{ ticket.number }}</span>
-                <span class="queue-time">{{ ticket.issuedAt }}</span>
+                <span class="queue-time">{{ ticket.issuedAt | waitTime }}</span>
                 <span class="queue-badge"
                   [class.badge--special]="ticket.number.startsWith('AE')"
                   [class.badge--priority]="ticket.number.startsWith('AP')"
