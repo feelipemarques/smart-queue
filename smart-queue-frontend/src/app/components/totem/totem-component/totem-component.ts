@@ -9,21 +9,34 @@ import { TicketService } from '../../../services/ticket/ticket-service';
 })
 export class TotemComponent {
 
-  private ticketService;
-  public ticketNumber: string = '';
-  public issuedAt: string = '';
-  public hasTicket: boolean = false;
+  ticketService;
+  ticketNumber: string = '';
+  issuedAt: string = '';
+  hasTicket: boolean = false;
+  interval: number = 0;
 
   constructor(ticketService: TicketService){
     this.ticketService = ticketService;
   }
 
   ngOnInit(){
+    this.checkTicketStatus();
+    this.interval = setInterval(() => this.checkTicketStatus(), 5000);
+  }
+
+  ngOnDestroy(){
+    clearInterval(this.interval);
+  }
+
+  checkTicketStatus(){
     const ticket = JSON.parse(localStorage.getItem('ticketInfo')!);
     if(ticket !== null){
       this.ticketService.getStatusByTicket(ticket.number).subscribe(response => {
           if(response === 'FINISHED'){
             localStorage.removeItem('ticketInfo');
+            this.ticketNumber = '';
+            this.issuedAt = '';
+            this.hasTicket = false;
           } else {
             console.log()
             this.ticketNumber = ticket.number;

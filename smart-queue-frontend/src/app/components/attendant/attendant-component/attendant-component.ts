@@ -83,4 +83,9 @@ export class AttendantComponent {
       setTimeout(() => this.errorMessage = '', 1000);
     }});
   }
+
+  logOff(){
+    localStorage.removeItem('counterId');
+    this.counterId = '';
+  }
 }

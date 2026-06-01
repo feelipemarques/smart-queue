@@ -24,6 +24,9 @@
         <div class="counter-info">
           <span class="counter-label">Counter</span>
           <span class="counter-id">{{ counterId }}</span>
+          <button class="btn btn--danger" (click)="logOff()" [disabled]="isInService">
+              Logoff
+          </button>
         </div>
         <div class="status-toggle" (click)="changeCounterStatus()">
           <span class="status-dot" [class.status-dot--online]="counterStatus"></span>
@@ -83,7 +86,7 @@
           }
 
           <div class="action-buttons">
-            <button class="btn btn--primary" (click)="callNextTicket()" [disabled]="!counterStatus">
+            <button class="btn btn--primary" (click)="callNextTicket()" [disabled]="!counterStatus || isInService">
               Call Next
             </button>
             <button class="btn btn--danger" (click)="finishCurrentTicket()" [disabled]="!isInService">
