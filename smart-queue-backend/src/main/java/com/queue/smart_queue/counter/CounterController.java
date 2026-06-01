@@ -8,32 +8,33 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/counter")
 @RequiredArgsConstructor
 public class CounterController {
 
     private final CounterService counterService;
 
-    @PostMapping("/counter/new")
+    @PostMapping("/new")
     public ResponseEntity<CounterResponse> newCounter(){
         return ResponseEntity.status(HttpStatus.CREATED).body(counterService.createCounter());
     }
 
-    @PutMapping("/counter/{counterId}/status")
+    @PutMapping("/{counterId}/status")
     public void changeCounterStatus(@PathVariable("counterId") Long counterId, @RequestParam("on") Boolean status){
         counterService.changeCounterStatus(counterId, status);
     }
 
-    @GetMapping("/counter/{counterId}/status")
+    @GetMapping("/{counterId}/status")
     public Boolean getCounterStatus(@PathVariable("counterId") Long counterId){
        return counterService.getCounterStatus(counterId);
     }
 
-    @PostMapping("/counter/{counterId}/call")
+    @PostMapping("/{counterId}/call")
     public TicketCalledResponse callNextTicket(@PathVariable Long counterId){
         return counterService.callNext(counterId);
     }
 
-    @PutMapping("/counter/{counterId}/finish")
+    @PutMapping("/{counterId}/finish")
     public void finishCounter(@PathVariable("counterId") Long counterId, @RequestParam("ticket") String ticket){
         counterService.finishTicket(counterId, ticket);
     }
