@@ -16,7 +16,6 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponseFormat(
                         LocalDateTime.now(),
-                        "400",
                         ex.getMessage()));
     }
 
@@ -26,9 +25,38 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponseFormat(
                         LocalDateTime.now(),
-                        "400",
                         ex.getMessage()
                 )
         );
+    }
+
+    @ExceptionHandler(CounterNotFoundOrOfflineException.class)
+    public ResponseEntity<ErrorResponseFormat> handleException(CounterNotFoundOrOfflineException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponseFormat(
+                        LocalDateTime.now(),
+                        ex.getMessage()
+                ));
+    }
+
+    @ExceptionHandler(NotAllowedException.class)
+    public ResponseEntity<ErrorResponseFormat> handleException(NotAllowedException ex) {
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(new ErrorResponseFormat(
+                        LocalDateTime.now(),
+                        ex.getMessage()
+                ));
+    }
+
+    @ExceptionHandler(TicketNotFoundException.class)
+    public ResponseEntity<ErrorResponseFormat> handleException(TicketNotFoundException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponseFormat(
+                        LocalDateTime.now(),
+                        ex.getMessage()
+                ));
     }
 }

@@ -2,7 +2,9 @@ package com.queue.smart_queue.ticket;
 
 import com.queue.smart_queue.counter.Counter;
 import com.queue.smart_queue.exception.CounterInServiceException;
+import com.queue.smart_queue.exception.NotAllowedException;
 import com.queue.smart_queue.exception.TicketNotCalledException;
+import com.queue.smart_queue.exception.TicketNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,7 @@ public class TicketService {
         return ticketRepository
                 .findById(Long.valueOf(ticket.substring(2)))
                 .map(Ticket::getStatus)
-                .orElseThrow(() -> new RuntimeException(ticket));
+                .orElseThrow(() -> new TicketNotFoundException(ticket));
     }
 
     public List<TicketResponse> getOpenTickets(){
@@ -39,11 +41,11 @@ public class TicketService {
 
     public void updateStatus(String number, TicketStatus status, Counter counter){
         Long id = Long.valueOf(number.substring(2));
-        if(ticketRepository.findById(id).isEmpty()) throw new RuntimeException("Ticket not found");
+        if(ticketRepository.findById(id).isEmpty()) throw new TicketNotFoundException("Ticket not found");
 
         Ticket ticket = ticketRepository.findById(id).get();
         if(ticket.getCounter() == null) throw new TicketNotCalledException("Ticket has not been called yet!");
-        if (!ticket.getCounter().equals(counter)) throw new RuntimeException("You can't finish another counter's ticket!");
+        if (!ticket.getCounter().equals(counter)) throw new NotAllowedException("You can't finish another counter's ticket!");
         ticket.setStatus(status);
         ticketRepository.save(ticket);
     }
