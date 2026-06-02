@@ -1,10 +1,7 @@
 package com.queue.smart_queue.ticket;
 
 import com.queue.smart_queue.counter.Counter;
-import com.queue.smart_queue.exception.CounterInServiceException;
-import com.queue.smart_queue.exception.NotAllowedException;
-import com.queue.smart_queue.exception.TicketNotCalledException;
-import com.queue.smart_queue.exception.TicketNotFoundException;
+import com.queue.smart_queue.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +17,7 @@ public class TicketService {
     public TicketResponse issueTicket(TicketPrefix prefix){
         Ticket ticket = new Ticket();
         ticket.setPrefix(prefix);
-        ticketRepository.save(ticket);
+        ticket = ticketRepository.save(ticket);
 
         return new TicketResponse(formatTicket(prefix, ticket.getId()),ticket.getIssuedAt());
     }
@@ -51,7 +48,11 @@ public class TicketService {
     }
 
     public TicketCalledResponse callNext(Counter counter){
-        Ticket nextTicket = ticketRepository.findAllWaitingOrdered(LocalDateTime.now().minusMinutes(30)).getFirst();
+        List<Ticket> list = ticketRepository.findAllWaitingOrdered(LocalDateTime.now().minusMinutes(30));
+
+        if(list.isEmpty()) throw new EmptyQueueException("Queue is empty!");
+
+        Ticket nextTicket = list.getFirst();
 
         if(ticketRepository.existsByCounterAndStatus(counter, TicketStatus.IN_SERVICE)){
             throw new CounterInServiceException("You must finish your current ticket first!");
