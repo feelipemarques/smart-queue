@@ -2,9 +2,11 @@ package com.queue.smart_queue.counter;
 
 import com.queue.smart_queue.ticket.TicketCalledResponse;
 import com.queue.smart_queue.ticket.TicketResponse;
+import com.queue.smart_queue.ticket.TicketStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,11 +33,12 @@ public class CounterController {
 
     @PostMapping("/{counterId}/call")
     public TicketCalledResponse callNextTicket(@PathVariable Long counterId){
-        return counterService.callNext(counterId);
+        var ticket = counterService.callNext(counterId);
+        return ticket;
     }
 
     @PutMapping("/{counterId}/finish")
-    public void finishCounter(@PathVariable("counterId") Long counterId, @RequestParam("ticket") String ticket){
+    public void finishTicket(@PathVariable("counterId") Long counterId, @RequestParam("ticket") String ticket){
         counterService.finishTicket(counterId, ticket);
     }
 
