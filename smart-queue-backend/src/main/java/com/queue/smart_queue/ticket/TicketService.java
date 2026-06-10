@@ -3,6 +3,7 @@ package com.queue.smart_queue.ticket;
 import com.queue.smart_queue.counter.Counter;
 import com.queue.smart_queue.exception.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,13 +14,17 @@ import java.util.List;
 public class TicketService {
 
     private final TicketRepository ticketRepository;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     public TicketResponse issueTicket(TicketPrefix prefix){
         Ticket ticket = new Ticket();
         ticket.setPrefix(prefix);
         ticket = ticketRepository.save(ticket);
 
-        return new TicketResponse(formatTicket(prefix, ticket.getId()),ticket.getIssuedAt());
+        var response = new TicketResponse(formatTicket(prefix, ticket.getId()),ticket.getIssuedAt());
+        simpMessagingTemplate.convertAndSend("/topic/queue", getOpenTickets());
+
+        return response;
     }
 
     public TicketStatus getStatusByTicket(String ticket){
