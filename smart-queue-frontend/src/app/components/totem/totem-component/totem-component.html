@@ -45,7 +45,11 @@
         <p class="ticket-card__label">Your ticket</p>
         <p class="ticket-card__number">{{ ticketNumber }}</p>
         <p class="ticket-card__time">Issued at {{ issuedAt }}</p>
-        <p class="ticket-card__hint">Please wait to be called on the panel.</p>
+        @if(ticketStatus == 'WAITING'){
+          <p class="ticket-card__hint">Please wait to be called on the panel.</p>
+        }@else if(ticketStatus == 'IN_SERVICE') {
+          <p class="ticket-card__called">Ticket called at counter {{counterCalling}}</p>
+        }
       </div>
     </main>
   }

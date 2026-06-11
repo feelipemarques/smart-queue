@@ -9,19 +9,19 @@ import { TicketService } from '../../../services/ticket/ticket-service';
 })
 export class TotemComponent {
 
-  ticketService;
   ticketNumber: string = '';
   issuedAt: string = '';
   hasTicket: boolean = false;
   interval: number = 0;
+  ticketStatus: string = 'WAITING';
+  counterCalling: string = '';
 
-  constructor(ticketService: TicketService){
-    this.ticketService = ticketService;
+  constructor(private ticketService: TicketService){
   }
 
   ngOnInit(){
-    this.checkTicketStatus();
-    this.interval = setInterval(() => this.checkTicketStatus(), 5000);
+    this.ticketService.connectToWebSocket();
+    this.checkTicketStatus();    
   }
 
   ngOnDestroy(){
@@ -38,10 +38,10 @@ export class TotemComponent {
             this.issuedAt = '';
             this.hasTicket = false;
           } else {
-            console.log()
             this.ticketNumber = ticket.number;
             this.issuedAt = ticket.issuedAt;
             this.hasTicket = true;
+            this.subscribeToTicket(ticket.number);
           }
       });
     }
@@ -53,6 +53,20 @@ export class TotemComponent {
       this.issuedAt = response.issuedAt;
       this.hasTicket = true;
       localStorage.setItem('ticketInfo', JSON.stringify({number: response.number, issuedAt: response.issuedAt}));
+      this.subscribeToTicket(response.number);
+    });
+  }
+
+  private subscribeToTicket(number: string){
+    this.ticketService.subscribeToTicket(number).subscribe(event => {
+      this.ticketStatus = event.ticketStatus;
+      this.counterCalling = event.counterId;
+      if(this.ticketStatus === 'FINISHED'){
+        localStorage.removeItem('ticketInfo');
+        this.ticketNumber = '';
+        this.issuedAt = '';
+        this.hasTicket = false;
+      }
     });
   }
 

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TicketCalledResponse } from '../ticket/ticket-called-response';
+import { WebsocketService } from '../websocket/websocket-service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,9 @@ import { TicketCalledResponse } from '../ticket/ticket-called-response';
 export class CounterService {
   
   private apiUrl = `http://localhost:8080`;
-  private httpClient;
 
-  constructor(httpClient: HttpClient){
-    this.httpClient = httpClient;
+
+  constructor(private httpClient: HttpClient, webSocketService: WebsocketService){
   }
 
   createNewCounter(): Observable<any>{
@@ -34,6 +34,7 @@ export class CounterService {
   finishTicket(counter: string, ticket: string): Observable<void>{
     return this.httpClient.put<void>(`${this.apiUrl}/counter/${counter}/finish`, null, {params: {ticket}})
   }
+
 
 
 }

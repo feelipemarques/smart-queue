@@ -9,6 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Similarity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +26,9 @@ public class TicketServiceTest {
 
     @Mock
     private TicketRepository ticketRepository;
+
+    @Mock
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     @InjectMocks
     private TicketService ticketService;
