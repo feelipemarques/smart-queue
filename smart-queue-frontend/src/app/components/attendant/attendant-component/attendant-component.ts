@@ -28,6 +28,7 @@ export class AttendantComponent {
   }
 
   ngOnInit(){
+    this.ticketService.connectToWebSocket();
     if(localStorage.getItem("counterId")){
       this.counterId = localStorage.getItem("counterId")!;
       this.currentTicket = localStorage.getItem("currentTicket")!;
@@ -37,6 +38,11 @@ export class AttendantComponent {
       this.counterId = '';
     }
     this.refreshTickets();
+    this.ticketService.subscribeToQueue().subscribe(event => {
+      console.log(event);
+      console.log(this.tickets);
+      this.tickets = event;
+    });
   }
 
   openCounter(){

@@ -45,7 +45,11 @@
         <p class="ticket-card__label">Your ticket</p>
         <p class="ticket-card__number">{{ ticketNumber }}</p>
         <p class="ticket-card__time">Issued at {{ issuedAt }}</p>
-        <p class="ticket-card__hint">Please wait to be called on the panel.</p>
+        @if(!ticketCalled){
+          <p class="ticket-card__hint">Please wait to be called on the panel.</p>
+        }@else {
+          <p class="ticket-card__called">Ticket called!</p>
+        }
       </div>
     </main>
   }
