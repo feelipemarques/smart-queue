@@ -193,9 +193,16 @@
 }
 
 .ticket-card__called {
-  font-size: 0.875rem;
+  font-size: 1.3rem;
   color: #f30b0b;
   margin: 0;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
+  animation: calling 2s infinite;
+}
+
+@keyframes calling {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 }

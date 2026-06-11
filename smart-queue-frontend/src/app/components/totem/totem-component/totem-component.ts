@@ -13,7 +13,8 @@ export class TotemComponent {
   issuedAt: string = '';
   hasTicket: boolean = false;
   interval: number = 0;
-  ticketCalled: boolean = false;
+  ticketStatus: string = 'WAITING';
+  counterCalling: string = '';
 
   constructor(private ticketService: TicketService){
   }
@@ -58,9 +59,13 @@ export class TotemComponent {
 
   private subscribeToTicket(number: string){
     this.ticketService.subscribeToTicket(number).subscribe(event => {
-      console.log(event);
-      if(event.ticketStatus === 'IN_SERVICE'){
-        this.ticketCalled = true;
+      this.ticketStatus = event.ticketStatus;
+      this.counterCalling = event.counterId;
+      if(this.ticketStatus === 'FINISHED'){
+        localStorage.removeItem('ticketInfo');
+        this.ticketNumber = '';
+        this.issuedAt = '';
+        this.hasTicket = false;
       }
     });
   }

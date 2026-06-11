@@ -50,7 +50,7 @@ public class CounterService {
                 findByIdAndOnline(counterId, Boolean.TRUE)
                 .orElseThrow(()-> new CounterNotFoundOrOfflineException("Counter not found or offline!"));
         ticketService.updateStatus(number, TicketStatus.FINISHED, counter);
-        simpMessagingTemplate.convertAndSend("/topic/ticket/" + number, TicketStatus.FINISHED);
+        simpMessagingTemplate.convertAndSend("/topic/ticket/" + number, new TicketCalled(TicketStatus.FINISHED, counterId));
     }
 
 

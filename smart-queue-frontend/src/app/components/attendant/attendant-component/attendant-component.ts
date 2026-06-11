@@ -45,6 +45,10 @@ export class AttendantComponent {
     });
   }
 
+  ngOnDestroy(){
+    this.logOff();
+  }
+
   openCounter(){
     this.counterService.createNewCounter().subscribe(response =>{
         this.counterId = response.id;
