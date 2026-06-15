@@ -87,7 +87,7 @@ export class AttendantComponent {
   }
 
   finishCurrentTicket(customerEmail: string){
-    this.counterService.finishTicket(this.counterId, this.currentTicket, {customerEmail: customerEmail}).subscribe({next: response =>{
+    this.counterService.finishTicket(this.counterId, this.currentTicket, {customerEmail: customerEmail, ticket: this.currentTicket}).subscribe({next: response =>{
       this.currentTicket = '';
       localStorage.removeItem("currentTicket");
       this.isInService = false;

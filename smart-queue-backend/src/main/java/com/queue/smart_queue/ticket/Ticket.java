@@ -30,4 +30,6 @@ public class Ticket {
     @ManyToOne(fetch = FetchType.LAZY)
     private Counter counter;
 
+    private Integer nps;
+
 }
