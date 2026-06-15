@@ -7,6 +7,8 @@
 ![Angular](https://img.shields.io/badge/Angular_20-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![RabbitMQ](https://img.shields.io/badge/RabbitMQ-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white)
+![WebSocket](https://img.shields.io/badge/WebSocket-010101?style=for-the-badge&logo=socketdotio&logoColor=white)
 
 ---
 
@@ -197,8 +199,8 @@ Every push triggers the CI pipeline:
 ## 🗺️ Roadmap
 
 - [x] **v1.0** — MVP: totem, priority queue, attendant panel, multiple counters, Docker
-- [ ] **v1.1** — Replace manual refresh with **WebSocket (STOMP)** real-time updates — the attendant panel and totem update automatically when queue state changes
-- [ ] **v1.2** — **NPS via email** — after service ends, publish an event to **RabbitMQ**; a notification service consumes it asynchronously and sends a satisfaction survey
+- [x] **v1.1** — Replace manual refresh with **WebSocket (STOMP)** real-time updates — the attendant panel and totem update automatically when queue state changes
+- [x] **v1.2** — **NPS via email** — after service ends, publish an event to **RabbitMQ**; a notification service consumes it asynchronously and sends a satisfaction survey
 - [ ] **v1.3** — Unit test coverage expansion + integration tests for the priority queue JPQL query
 - [ ] **v2.0** — Counter login (attendants select from a fixed list), multiple service types (Cashier, Manager, etc.), native mobile app (Flutter), telemetry with Micrometer + Prometheus/Grafana
 

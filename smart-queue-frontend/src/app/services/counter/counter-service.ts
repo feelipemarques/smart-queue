@@ -31,8 +31,9 @@ export class CounterService {
     return this.httpClient.post<TicketCalledResponse>(`${this.apiUrl}/counter/${counter}/call`, null);
   }
 
-  finishTicket(counter: string, ticket: string): Observable<void>{
-    return this.httpClient.put<void>(`${this.apiUrl}/counter/${counter}/finish`, null, {params: {ticket}})
+  finishTicket(counter: string, ticket: string, email: any): Observable<void>{
+    console.log(email);
+    return this.httpClient.put<void>(`${this.apiUrl}/counter/${counter}/finish`, email, {params: {ticket}},)
   }
 
 

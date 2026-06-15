@@ -27,4 +27,9 @@ public class TicketController {
         return ticketService.getStatusByTicket(ticket);
     }
 
+    @GetMapping("/{ticket}/nps")
+    public void saveNpsRating(@PathVariable("ticket") String ticket, @RequestParam Integer score){
+        ticketService.saveNpsRating(ticket, score);
+    }
+
 }
