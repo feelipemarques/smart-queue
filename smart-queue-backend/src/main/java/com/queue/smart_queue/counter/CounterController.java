@@ -38,7 +38,7 @@ public class CounterController {
     }
 
     @PutMapping("/{counterId}/finish")
-    public void finishTicket(@PathVariable("counterId") Long counterId, @RequestParam("ticket") String ticket, NpsEvent event){
+    public void finishTicket(@PathVariable("counterId") Long counterId, @RequestParam("ticket") String ticket, @RequestBody NpsEvent event){
         counterService.finishTicket(counterId, ticket, event);
     }
 

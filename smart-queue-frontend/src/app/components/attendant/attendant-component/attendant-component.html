@@ -89,11 +89,11 @@
             <button class="btn btn--primary" (click)="callNextTicket()" [disabled]="!counterStatus || isInService">
               Call Next
             </button>
-            <button class="btn btn--danger" (click)="finishCurrentTicket()" [disabled]="!isInService">
+            <input class="input--email" [disabled]="!isInService" type="email" placeholder="Customer E-mail" [(ngModel)]="customerEmail" #emailInput="ngModel" required email>
+            <button class="btn btn--danger" (click)="finishCurrentTicket(customerEmail)" [disabled]="!isInService || emailInput.invalid">
               Finish Service
             </button>
           </div>
-
         </section>
       </div>
     </div>

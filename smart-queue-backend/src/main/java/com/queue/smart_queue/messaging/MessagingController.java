@@ -14,8 +14,8 @@ public class MessagingController {
     private final MessagingService messagingService;
 
     @PostMapping
-    public void sendMessage(@RequestBody String message) {
-        messagingService.publishMessage(message);
+    public void sendMessage(@RequestBody NpsEvent event) {
+        messagingService.publishMessage(event);
     }
 
 }
