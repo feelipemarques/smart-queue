@@ -134,15 +134,12 @@
   color: #9CA3AF;
 }
 
-/* Dashboard content */
 .dashboard-content {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 360px;
-  min-height: calc(100vh - 62px);
 }
 
-/* Queue section */
 .queue-section {
   padding: 2rem;
   border-right: 1px solid rgba(255, 255, 255, 0.07);
@@ -353,6 +350,34 @@
 .btn--primary {
   background: #14B8A6;
   color: #042F2E;
+}
+
+.input--email {
+  width: 100%;
+  padding: 0.875rem;
+  border-radius: 12px;
+  border: 1px solid #042F2E;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  letter-spacing: 0.01em;
+  background: #14b8a500;
+  color: #042F2E;
+  color: white;
+  text-align: center;
+  cursor: default;
+}
+
+.input--email:disabled {
+  cursor: no-drop;
+}
+
+.input--email.ng-invalid.ng-touched {
+  border: 2px solid #ff4d4d; 
+  background-color: #ffe6e610; 
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 77, 77, 0.5); 
 }
 
 .btn--primary:not(:disabled):hover {

@@ -77,4 +77,13 @@ public class TicketService {
         else if(id <= 99) add = "0";
         return prefix + add + id.toString();
     }
+
+    public void saveNpsRating(String number, Integer nps){
+        Long id = Long.valueOf(number.substring(2));
+        if(ticketRepository.findById(id).isEmpty()) throw new TicketNotFoundException("Ticket not found");
+
+        Ticket ticket = ticketRepository.findById(id).get();
+        ticket.setNps(nps);
+        ticketRepository.save(ticket);
+    }
 }

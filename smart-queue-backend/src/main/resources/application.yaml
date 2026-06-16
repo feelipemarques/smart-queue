@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/smart-queue
+    url: jdbc:postgresql://172.20.48.1:5432/smart-queue
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -12,6 +12,17 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 587
+    username: ${MAILTRAP_USERNAME}
+    password: ${MAILTRAP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 server:
   port: 8080
 app:

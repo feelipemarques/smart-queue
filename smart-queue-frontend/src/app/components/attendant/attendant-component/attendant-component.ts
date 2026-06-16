@@ -3,10 +3,11 @@ import { CounterService } from '../../../services/counter/counter-service';
 import { TicketService } from '../../../services/ticket/ticket-service';
 import { TicketResponse } from '../../../services/ticket/ticket-response';
 import { WaitTimePipe } from '../../../pipes/wait-time-pipe';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-attendant-component',
-  imports: [WaitTimePipe],
+  imports: [WaitTimePipe, FormsModule],
   templateUrl: './attendant-component.html',
   styleUrl: './attendant-component.css',
 })
@@ -21,6 +22,7 @@ export class AttendantComponent {
   isInService: boolean = false;
   currentTicket: string = '';
   errorMessage = '';
+  customerEmail = '';
 
   constructor(counterService: CounterService, ticketService: TicketService){
     this.counterService = counterService;
@@ -84,8 +86,8 @@ export class AttendantComponent {
     }});
   }
 
-  finishCurrentTicket(){
-    this.counterService.finishTicket(this.counterId, this.currentTicket).subscribe({next: response =>{
+  finishCurrentTicket(customerEmail: string){
+    this.counterService.finishTicket(this.counterId, this.currentTicket, {customerEmail: customerEmail, ticket: this.currentTicket}).subscribe({next: response =>{
       this.currentTicket = '';
       localStorage.removeItem("currentTicket");
       this.isInService = false;

@@ -1,6 +1,8 @@
 package com.queue.smart_queue.counter;
 
 import com.queue.smart_queue.exception.CounterNotFoundOrOfflineException;
+import com.queue.smart_queue.messaging.MessagingService;
+import com.queue.smart_queue.messaging.NpsEvent;
 import com.queue.smart_queue.ticket.TicketCalledResponse;
 import com.queue.smart_queue.ticket.TicketService;
 import com.queue.smart_queue.ticket.TicketStatus;
@@ -16,6 +18,7 @@ public class CounterService {
     private final CounterRepository counterRepository;
     private final TicketService ticketService;
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private final MessagingService messagingService;
 
     public CounterResponse createCounter(){
         Counter counter = new Counter();
@@ -45,12 +48,13 @@ public class CounterService {
         return ticket;
     }
 
-    public void finishTicket(Long counterId, String number){
+    public void finishTicket(Long counterId, String number, NpsEvent event){
         Counter counter = counterRepository.
                 findByIdAndOnline(counterId, Boolean.TRUE)
                 .orElseThrow(()-> new CounterNotFoundOrOfflineException("Counter not found or offline!"));
         ticketService.updateStatus(number, TicketStatus.FINISHED, counter);
         simpMessagingTemplate.convertAndSend("/topic/ticket/" + number, new TicketCalled(TicketStatus.FINISHED, counterId));
+        messagingService.publishMessage(event);
     }
 
 

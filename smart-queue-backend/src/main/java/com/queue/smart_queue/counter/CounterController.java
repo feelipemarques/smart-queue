@@ -1,5 +1,6 @@
 package com.queue.smart_queue.counter;
 
+import com.queue.smart_queue.messaging.NpsEvent;
 import com.queue.smart_queue.ticket.TicketCalledResponse;
 import com.queue.smart_queue.ticket.TicketResponse;
 import com.queue.smart_queue.ticket.TicketStatus;
@@ -33,13 +34,12 @@ public class CounterController {
 
     @PostMapping("/{counterId}/call")
     public TicketCalledResponse callNextTicket(@PathVariable Long counterId){
-        var ticket = counterService.callNext(counterId);
-        return ticket;
+        return counterService.callNext(counterId);
     }
 
     @PutMapping("/{counterId}/finish")
-    public void finishTicket(@PathVariable("counterId") Long counterId, @RequestParam("ticket") String ticket){
-        counterService.finishTicket(counterId, ticket);
+    public void finishTicket(@PathVariable("counterId") Long counterId, @RequestParam("ticket") String ticket, @RequestBody NpsEvent event){
+        counterService.finishTicket(counterId, ticket, event);
     }
 
 }
