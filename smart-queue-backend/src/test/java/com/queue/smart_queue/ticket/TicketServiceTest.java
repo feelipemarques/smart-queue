@@ -4,6 +4,7 @@ import com.queue.smart_queue.counter.Counter;
 import com.queue.smart_queue.exception.CounterInServiceException;
 import com.queue.smart_queue.exception.EmptyQueueException;
 import com.queue.smart_queue.exception.TicketNotCalledException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
