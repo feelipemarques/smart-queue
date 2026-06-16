@@ -48,6 +48,7 @@ public class TicketRepositoryTest {
     @Test
     public void shouldCallPriorityBeforeNormal(){
         ticketRepository.delete(ae1Ticket);
+        ticketRepository.delete(ae2Ticket);
         assertEquals(apTicket, ticketRepository.findAllWaitingOrdered(LocalDateTime.now().minusMinutes(30L)).getFirst());
     }
 
